@@ -1,12 +1,11 @@
 import axios from 'axios';
 import React , {useState,useEffect} from 'react';
-
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import img from  "./compass.svg";
-import img2 from "./icons8-dew-point-90.png";
-import img3 from "./icons8-marker-sun-90.png";
-import img4 from "./icons8-windy-weather-90.png";
-import "./index.css"
+import "./index.css";
+import GoogleMap from "./components/GoogleMap";
+require('dotenv').config()
+const dotenv=require('dotenv');
 
 const WeathApp = () => {
     const[search,setSearch] = useState("Haridwar");
@@ -14,6 +13,14 @@ const WeathApp = () => {
     const [country,setCountry] = useState();
     const[temp,setTemp] = useState("");
     const [wind, setWind] = useState("");
+    const [long, setLong] = useState("");
+    const [lat, setLat] = useState("");
+
+    const mapVal =
+    {
+      longitude:long,
+      latitude:lat
+    }
     
 
 
@@ -25,7 +32,8 @@ const WeathApp = () => {
             setTemp(res.data.main.temp);
             setCountry(res.data.sys.country);
             setWind(res.data.wind.speed);
-            
+            setLong(res.data.coord.lon);
+            setLat(res.data.coord.lat);
         }
 
         getData();
@@ -38,7 +46,7 @@ const WeathApp = () => {
           <img src={img} className="card-img-top pt-3 " alt="..." />
         </figure>
         <div className="card-body">
-          <h1 className=" display-3">Weatherizer</h1>
+          <h1 className=" display-2">Cloudpoint</h1>
           <p className="card-text ">View the current weather.</p>
           <br/>
           <br/>
@@ -51,22 +59,52 @@ const WeathApp = () => {
           </div>
           
         </div>
+        <div className='row'>
+        <div className='col-6'>
         <div className="result my-5">
         <div className="row mx-5">
-        <img src={img2} alt="img" className=" icons"/>
+        <img src="./compass.svg" alt='lund' className=" icons"/>
         <h1 className="display-5 col-3  ">{temp}°C</h1>
         </div>
         <div className="row mx-5 my-5">
-        <img src={img3} alt="img" className=" icons"/>
+        <img src="./compass.svg" alt='lund' className=" icons"/>
         <h1 className="display-5 col-3  ">{city},{country}</h1>
         </div>
         <div className="row mx-5">
-        <img src={img4} alt="img" className=" icons"/>
+        <img src="./compass.svg" alt='lund' className=" icons"/>
         <h1 className="display-5 col-3  ">{wind} Km/h</h1>
         </div>
         
         </div>
+        </div>
+        <div className='col-6'>
+        <div className="result my-5">
+        <div className="row mx-5">
+        <img src="./compass.svg" alt='lund' className=" icons"/>
+        <h1 className="display-5 col-3  ">{temp}°C</h1>
+        </div>
+        <div className="row mx-5 my-5">
+        <img src="./compass.svg" alt='lund' className=" icons"/>
+        <h1 className="display-5 col-3  ">{city},{country}</h1>
+        </div>
+        <div className="row mx-5">
+        <img src="./compass.svg" alt='lund' className=" icons"/>
+        <h1 className="display-5 col-3  ">{wind} Km/h</h1>
+        </div>
+        
+        </div>
+        </div>
+        
+
+        </div>
+        
+        <div className='mx-5 my-5'>
+        <GoogleMap values={mapVal}/>
+        </div>
+        
       </div>
+
+      
 
         </section>
         
